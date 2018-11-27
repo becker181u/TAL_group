@@ -1,0 +1,1 @@
+print(get_word_score("a",0)==1)

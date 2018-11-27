@@ -69,10 +69,13 @@ def get_frequency_dict(sequence):
 def get_word_score(word, n):
 
     total = 0
-
-    for x in word:
-        total += SCRABBLE_LETTER_VALUES[x]
-    return total
+    totalbis = len(word)
+    return sum(SCRABBLE_LETTER_VALUES[x] for x in word)
+    #1st comp = sum(SCRABBLE_LETTER_VALUES[letters] for letters in word)
+    #2nd comp = 7*len(word) - 3*(n-len(word))
+    #wordlen = lenght of the word, n = lenght of the hand when word is played
+    #def prod = 1st comp * 2nd comp
+#print get_word_score.lower
 
     """
     Returns the score for a word. Assumes the word is a

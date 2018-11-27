@@ -127,10 +127,10 @@ def display_hand(hand):
     hand: dictionary (string -> int)
     """
 
-    """for letter in hand.keys():
-        for j in range(hand[letter]):
+    for letter in hand.keys(): #pour chaque lettre dans hand
+        for j in range(hand[letter]): #
              print(letter, end=' ')      # print all on the same line
-    print()  """                            # print an empty line
+    print()                          # print an empty line
 
 #
 # Make sure you understand how this function works and what it does!

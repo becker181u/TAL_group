@@ -67,6 +67,24 @@ def get_frequency_dict(sequence):
 # Problem #1: Scoring a word
 #
 def get_word_score(word, n):
+
+    word = word.lower()
+    first_comp = sum(SCRABBLE_LETTER_VALUES[x] for x in word)
+    wordlen = len(word)
+    second_comp = 7*wordlen - 3*(n-wordlen)
+    if second_comp < 1 : #If the second component is less than 1, the second component is 1
+        second_comp = 1
+    total = first_comp * second_comp
+    if total >= 0  :
+        return total
+    else :
+        return 1
+    #1st comp = sum(SCRABBLE_LETTER_VALUES[letters] for letters in word)
+    #2nd comp = 7*len(word) - 3*(n-len(word))
+    #wordlen = lenght of the word, n = lenght of the hand when word is played
+    #def prod = 1st comp * 2nd comp
+#print get_word_score.lower
+
     """
     Returns the score for a word. Assumes the word is a
     valid word.
@@ -91,22 +109,8 @@ def get_word_score(word, n):
     n: int >= 0
     returns: int >= 0
     """
-    word = word.lower()
-    first_comp = sum(SCRABBLE_LETTER_VALUES[x] for x in word)
-    wordlen = len(word)
-    second_comp = 7*wordlen - 3*(n-wordlen)
-    if second_comp < 1 : #If the second component is less than 1, the second component is 1
-        second_comp = 1
-    total = first_comp * second_comp
-    if total >= 0  :
-        return total
-    else :
-        return 1
-    #1st comp = sum(SCRABBLE_LETTER_VALUES[letters] for letters in word)
-    #2nd comp = 7*len(word) - 3*(n-len(word))
-    #wordlen = lenght of the word, n = lenght of the hand when word is played
-    #def prod = 1st comp * 2nd comp
-    #print get_word_score.lower
+    # TO DO... Remove this line when you implement this function
+
 #
 # Make sure you understand how this function works and what it does!
 #
@@ -123,10 +127,10 @@ def display_hand(hand):
     hand: dictionary (string -> int)
     """
 
-    for letter in hand.keys():
+    """for letter in hand.keys():
         for j in range(hand[letter]):
              print(letter, end=' ')      # print all on the same line
-    print()                              # print an empty line
+    print()  """                            # print an empty line
 
 #
 # Make sure you understand how this function works and what it does!

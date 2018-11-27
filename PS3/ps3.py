@@ -68,6 +68,7 @@ def get_frequency_dict(sequence):
 #
 def get_word_score(word, n):
 
+    word = word.lower()
     total = 0
 
     for x in word:

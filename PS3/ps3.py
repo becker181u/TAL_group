@@ -191,6 +191,7 @@ def update_hand(hand, word):
     for letter in word_dict.keys():
         if letter in hand.keys() and word_dict[letter] <= hand[letter] :
             del new_hand[letter]
+            print("Lettre delete", letter)
 
     return new_hand
 

@@ -1,0 +1,15 @@
+Utiliser GIT !
+
+Ouvrir un terminal où est le fichier que tu as modifié
+
+Si c'est un nouveau fichier :
+   git add --all
+
+Puis :
+   git commit -am "Modification du fichier X"
+
+Puis :
+   git pull
+
+Puis :
+   git push

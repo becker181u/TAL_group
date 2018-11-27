@@ -187,10 +187,20 @@ def update_hand(hand, word):
     word_dict = get_frequency_dict(word)
     #word_dict est le dictionaire correspondant au mot word
     new_hand = hand
+    print(new_hand)
     for letter in word_dict.keys():
         if letter in hand.keys() and word_dict[letter] <= hand[letter] :
-            del new_hand[letter]
+            if word_dict[letter] == hand[letter] :
+                del new_hand[letter]
+            else :
+                hand[letter] -= 1
             print("Lettre delete", letter)
+        else : #si la lettre de word n'est pas pas dans hand ou si elle y est et que la fréquence dans word et plus grande que dans hand
+            if word_dict[letter] > hand[letter] :
+                del new_hand[letter]
+                print("Letter en plus delete", letter)
+
+    return new_hand
 
 #
 # Problem #3: Test word validity
@@ -365,3 +375,6 @@ def play_game(word_list):
 if __name__ == '__main__':
     word_list = load_words()
     play_game(word_list)
+    hand = {'a' : 2,'y' : 1, 'b' : 1, 'p': 2, 'd' : 1}
+    word = "bayypj"
+    print(update_hand(hand, word))

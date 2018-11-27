@@ -129,7 +129,7 @@ def display_hand(hand):
 
     for letter in hand.keys(): #pour chaque lettre dans hand
         for j in range(hand[letter]): #
-             print(letter, end=" ")      # print all on the same line
+             print(letter, end=' ')      # print all on the same line
     print()                          # print an empty line
 
 #
@@ -169,10 +169,9 @@ def deal_hand(n):
 def update_hand(hand, word):
     """
     Does NOT assume that hand contains every letter in word at least as
-    many times as the letter appears in word.
-    Letters in word that don't appear in hand should be ignored.
-    Letters that appear in word more times than in hand should never
-    result in a negative count; instead, set the
+    many times as the letter appears in word. Letters in word that don't
+    appear in hand should be ignored. Letters that appear in word more times
+    than in hand should never result in a negative count; instead, set the
     count in the returned hand to 0 (or remove the letter from the
     dictionary, depending on how your code is structured).
 
@@ -192,11 +191,6 @@ def update_hand(hand, word):
         if letter in hand.keys() and word_dict[letter] <= hand[letter] :
             del new_hand[letter]
             print("Lettre delete", letter)
-
-    return new_hand
-
-
-    # TO DO... Remove this line when you implement this function
 
 #
 # Problem #3: Test word validity
@@ -371,7 +365,3 @@ def play_game(word_list):
 if __name__ == '__main__':
     word_list = load_words()
     play_game(word_list)
-
-    hand = {'a':1, 'u': 3, 't':2, 'j': 1}
-    word = 'jau'
-    print(update_hand(hand, word))

@@ -69,9 +69,8 @@ def get_frequency_dict(sequence):
 def get_word_score(word, n):
 
     word = word.lower()
-    total = 0
-    totalbis = len(word)
-    return sum(SCRABBLE_LETTER_VALUES[x] for x in word)
+    first_comp = return sum(SCRABBLE_LETTER_VALUES[x] for x in word)
+    second_comp =
     #1st comp = sum(SCRABBLE_LETTER_VALUES[letters] for letters in word)
     #2nd comp = 7*len(word) - 3*(n-len(word))
     #wordlen = lenght of the word, n = lenght of the hand when word is played

@@ -129,7 +129,7 @@ def display_hand(hand):
 
     for letter in hand.keys(): #pour chaque lettre dans hand
         for j in range(hand[letter]): #
-             print(letter, end=' ')      # print all on the same line
+             print(letter)      # print all on the same line
     print()                          # print an empty line
 
 #
@@ -184,22 +184,23 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)
     returns: dictionary (string -> int)
     """
+    word = word.lower()
     word_dict = get_frequency_dict(word)
     #word_dict est le dictionaire correspondant au mot word
-    new_hand = hand
+    new_hand =hand.copy()
     print(new_hand)
     for letter in word_dict.keys():
-        if letter in hand.keys() and word_dict[letter] <= hand[letter] :
-            if word_dict[letter] == hand[letter] :
+        if letter in hand.keys() and word_dict.get(letter) <= hand.get(letter) :
+            if word_dict.get(letter) == hand.get(letter) :
                 del new_hand[letter]
             else :
-                hand[letter] -= 1
+                new_hand[letter] -= 1
             print("Lettre delete", letter)
         else : #si la lettre de word n'est pas pas dans hand ou si elle y est et que la fréquence dans word et plus grande que dans hand
-            if word_dict[letter] > hand[letter] :
+            if word_dict.get(letter, 0) > hand.get(letter,1) :
                 del new_hand[letter]
                 print("Letter en plus delete", letter)
-
+    print("hand : ",hand)
     return new_hand
 
 #

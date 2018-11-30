@@ -221,8 +221,10 @@ def is_valid_word(word, hand, word_list):
     word = get_frequency_dict(word)
 
     if word in word_list: #si le mot existe
-    	for letter in word: #pour chaque lettre dans le mot word
-    		if not letter in hand.keys(): #si la lettre est présent dans sa main
+    	for letter in word.keys(): #pour chaque lettre dans le mot word
+    		if letter in hand.keys() or word.get(letter) > hand.get(letter): #si la lettre est présent dans sa main
+    			return True
+    		else:
     			return False
     else :
         return False

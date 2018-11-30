@@ -11,12 +11,12 @@ import math
 import random
 import string
 
-VOWELS = 'aeiou'
+VOWELS = 'aeiou*'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
 SCRABBLE_LETTER_VALUES = {
-    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+    '*' : 0, a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
 # -----------------------------------
@@ -150,8 +150,9 @@ def deal_hand(n):
     returns: dictionary (string -> int)
     """
 
-    hand={}
-    num_vowels = int(math.ceil(n / 3))
+
+    hand={'*': 1}
+    num_vowels-1 = int(math.ceil(n / 3))
 
     for i in range(num_vowels):
         x = random.choice(VOWELS)
@@ -218,16 +219,17 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
-
-
-    if word in word_list: #si le mot existe
-        word = get_frequency_dict(word)
-        for letter in word.keys():
-            
-            if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+    index = word.find(*)
+    if not index == -1 :
+        for vowel in VOWELS[:-1] :
+            word.replace("*", vowel)
+            if word in word_list :
+                word = get_frequency_dict(word)
+                for letter in word.keys():
+                    if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                        return False
+            else :
                 return False
-    else :
-        return False
     return True
 
 #

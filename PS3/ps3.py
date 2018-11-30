@@ -219,13 +219,13 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
-    index = word.find(*)
-    if not index == -1 :
-        for vowel in VOWELS[:-1] :
-            word.replace("*", vowel)
-            if word in word_list :
-                word = get_frequency_dict(word)
-                for letter in word.keys():
+    index = word.find(*)    #cherche une astérisque dans le word et retourne la position de l'astérisque
+    if not index == -1 :    #s'il y a un astérisque
+        for vowel in VOWELS[:-1] :  #pour chaque voyelle présente dans la liste des voyelles, on ne prend pas le dernier élément de la liste
+            word.replace("*", vowel)    #on remplace l'astérique par une voyelle
+            if word in word_list :  #si le word existe dans la word_list
+                word = get_frequency_dict(word) #word est un dictionnaire
+                for letter in word.keys():  #on cherche la clé de chaque lettre dans word
                     if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
                         return False
             else :

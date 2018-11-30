@@ -208,6 +208,10 @@ def is_valid_word(word, hand, word_list):
     composed of letters in the hand. Otherwise, returns False.
     Does not mutate hand or word_list.
 
+    si la lettre est dans la main, on recommence avec la prochain jusqu'à ce qu'il est plus de lettre
+    si toutes les lettres de word sont dans main, return True
+    sinon return false
+
     word: string
     hand: dictionary (string -> int)
     word_list: list of lowercase strings

@@ -218,13 +218,15 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
+    word = get_frequency_dict(word)
 
     if word in word_list: #si le mot existe
     	for letter in word: #pour chaque lettre dans le mot word
-    		if letter in hand: #si la lettre est présent dans sa main
-    			return True
-    		else:
+    		if not letter in hand.keys(): #si la lettre est présent dans sa main
     			return False
+    else :
+        return False
+    return True
 
 #
 # Problem #5: Playing a hand

@@ -16,7 +16,7 @@ CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
 SCRABBLE_LETTER_VALUES = {
-    '*' : 0, a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+    '*' : 0, 'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
 # -----------------------------------
@@ -152,7 +152,7 @@ def deal_hand(n):
 
 
     hand={'*': 1}
-    num_vowels-1 = int(math.ceil(n / 3))
+    num_vowels = int(math.ceil(n / 3))-1
 
     for i in range(num_vowels):
         x = random.choice(VOWELS)
@@ -219,17 +219,39 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
-    index = word.find(*)    #cherche une astérisque dans le word et retourne la position de l'astérisque
+    index = word.find('*')
+    print(index)
     if not index == -1 :    #s'il y a un astérisque
+        print("word : ", word)
+        vowel_precedent = "*"
         for vowel in VOWELS[:-1] :  #pour chaque voyelle présente dans la liste des voyelles, on ne prend pas le dernier élément de la liste
-            word.replace("*", vowel)    #on remplace l'astérique par une voyelle
+            word = word.replace(vowel_precedent, vowel, index)
+            print("word replace :", word)
             if word in word_list :  #si le word existe dans la word_list
+                new_hand = hand.copy()
+                del new_hand["*"]
+                new_hand[vowel] = 1
                 word = get_frequency_dict(word) #word est un dictionnaire
                 for letter in word.keys():  #on cherche la clé de chaque lettre dans word
-                    if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                    print("letter : ", letter)
+                    if (not letter in new_hand.keys()) or word.get(letter) > new_hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                        print("letter false : ", letter)
                         return False
-            else :
-                return False
+                return True
+            vowel_precedent = vowel
+        return False
+
+
+
+
+    else : #si il n'a pas d'astérique
+        if word in word_list :  #si le word existe dans la word_list
+            word = get_frequency_dict(word) #word est un dictionnaire
+            for letter in word.keys():  #on cherche la clé de chaque lettre dans word
+                if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                    return False
+        else :
+            return False
     return True
 
 #

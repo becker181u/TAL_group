@@ -306,6 +306,7 @@ def play_hand(hand, word_list):
         if word == "!!":
             # End the game (break out of the loop)
             print("Tu as arrete la partie")
+            break
         # Otherwise (the input is not two exclamation points):
         else:
             # If the word is valid:

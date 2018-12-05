@@ -295,17 +295,17 @@ def play_hand(hand, word_list):
     """
 
     # Keep track of the total score
-total=0
+    total=0
     # As long as there are still letters left in the hand:
-While calculate_handlen(hand) > 0: #tant qu'il reste des lettres dans la main
+    while calculate_handlen(hand) > 0: #tant qu'il reste des lettres dans la main
         # Display the hand
-        print("Main du joueur : ",display_hand(hand))
+        display_hand(hand)
         # Ask user for input
         word = input("Enter a word: ") #input word
         # If the input is two exclamation points:
         if word == "!!":
             # End the game (break out of the loop)
-
+            print("Tu as arrete la partie")
         # Otherwise (the input is not two exclamation points):
         else:
             # If the word is valid:
@@ -314,7 +314,8 @@ While calculate_handlen(hand) > 0: #tant qu'il reste des lettres dans la main
                 # and the updated total score
                 word_score = get_word_score(word,calculate_handlen(hand))
                 print("score du mot : ", word_score) #score displayed
-                print("Total : ", total += word_score)
+                total += word_score
+                print("Total : ", total)
 
             # Otherwise (the word is not valid):
                 # Reject invalid word (print a message)
@@ -410,6 +411,4 @@ if __name__ == '__main__':
     word_list = load_words()
     play_game(word_list)
     hand = {'a' : 2,'y' : 1, 'b' : 1, 'p': 2, 'd' : 1}
-    word = "bayypj"
-    print(calculate_handlen(hand))
-    print(update_hand(hand, word))
+    play_hand(hand,word_list)

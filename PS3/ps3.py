@@ -152,7 +152,7 @@ def deal_hand(n):
 
 
     hand={'*': 1}
-    num_vowels-1 = int(math.ceil(n / 3))
+    num_vowels = int(math.ceil(n / 3))-1
 
     for i in range(num_vowels):
         x = random.choice(VOWELS)
@@ -219,18 +219,33 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
-    index = word.find(*)    #cherche une astérisque dans le word et retourne la position de l'astérisque
-    if not index == -1 :    #s'il y a un astérisque
+    index = word.find('*')
+    if not index == -1 :
+        print("word : ", word)
+        vowel_precedent = "*"
         for vowel in VOWELS[:-1] :  #pour chaque voyelle présente dans la liste des voyelles, on ne prend pas le dernier élément de la liste
-            word.replace("*", vowel)    #on remplace l'astérique par une voyelle
+            word = word.replace(vowel_precedent, vowel, index)
             if word in word_list :  #si le word existe dans la word_list
+                new_hand = hand.copy()
+                del new_hand["*"]
+                new_hand[vowel] = 1
                 word = get_frequency_dict(word) #word est un dictionnaire
                 for letter in word.keys():  #on cherche la clé de chaque lettre dans word
-                    if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                    if (not letter in new_hand.keys()) or word.get(letter) > new_hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
                         return False
-            else :
-                return False
+                return True
+            vowel_precedent = vowel
+        return False
+    else :
+        if word in word_list :  #si le word existe dans la word_list
+            word = get_frequency_dict(word) #word est un dictionnaire
+            for letter in word.keys():  #on cherche la clé de chaque lettre dans word
+                if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                    return False
+        else :
+            return False
     return True
+
 
 #
 # Problem #5: Playing a hand
@@ -244,7 +259,7 @@ def calculate_handlen(hand):
     """
 
     #[len(x) for x in hand.values()]
-    lenght_hand = sum([len(x) for x in hand.values()])
+    lenght_hand = sum([x for x in hand.values()])
     # print lenght_hand
     return lenght_hand
 
@@ -279,7 +294,6 @@ def play_hand(hand, word_list):
 
     """
 
-    # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
 
     # As long as there are still letters left in the hand:
@@ -389,8 +403,10 @@ def play_game(word_list):
 # when the program is run directly, instead of through an import statement
 #
 if __name__ == '__main__':
+
     word_list = load_words()
     play_game(word_list)
     hand = {'a' : 2,'y' : 1, 'b' : 1, 'p': 2, 'd' : 1}
     word = "bayypj"
+    print(calculate_handlen(hand))
     print(update_hand(hand, word))

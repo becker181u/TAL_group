@@ -366,6 +366,8 @@ def substitute_hand(hand, letter):
 
     new_hand = hand.copy()
     x = False
+    if letter not in hand:
+        return hand #si la lettre donnée par le joueur n'est pas dans la main, la main ne change pas
     while x == False:
         new_letter = random.choice(VOWELS + CONSONANTS)
 
@@ -423,4 +425,3 @@ if __name__ == '__main__':
     hand = {'a' : 2,'y' : 1, 'b' : 1, 'p': 2, 'd' : 1}
     play_hand(hand,word_list)
     print(substitute_hand(hand, 'b'))
-    

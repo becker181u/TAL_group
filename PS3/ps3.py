@@ -11,7 +11,7 @@ import math
 import random
 import string
 
-VOWELS = 'aeiou*'
+VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
@@ -219,19 +219,22 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     word = word.lower()
-    index = word.find('*')
-    if not index == -1 :
-        print("word : ", word)
+    index = word.find('*') #on cherche si il y a un astérisque
+    if not index == -1 : #si il y a un astérisque dans le mot
         vowel_precedent = "*"
-        for vowel in VOWELS[:-1] :  #pour chaque voyelle présente dans la liste des voyelles, on ne prend pas le dernier élément de la liste
-            word = word.replace(vowel_precedent, vowel, index)
+        for vowel in VOWELS :  #pour chaque voyelle présente dans la liste des voyelles
+            #word = word.replace(vowel_precedent, vowel, 1)
+            list_word = list(word)
+            list_word[index] = vowel
+            word = "".join(list_word)
             if word in word_list :  #si le word existe dans la word_list
                 new_hand = hand.copy()
                 del new_hand["*"]
-                new_hand[vowel] = 1
+                new_hand[vowel] = 1 #on remplace l'astérisque par la vowel
                 word = get_frequency_dict(word) #word est un dictionnaire
                 for letter in word.keys():  #on cherche la clé de chaque lettre dans word
                     if (not letter in new_hand.keys()) or word.get(letter) > new_hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                        print("You have not got this letter in your hand")
                         return False
                 return True
             vowel_precedent = vowel
@@ -241,6 +244,7 @@ def is_valid_word(word, hand, word_list):
             word = get_frequency_dict(word) #word est un dictionnaire
             for letter in word.keys():  #on cherche la clé de chaque lettre dans word
                 if (not letter in hand.keys()) or word.get(letter) > hand.get(letter,0): #si la lettre n'est pas dans la main ou si le nombre de lettre est plus grand que le nombre de cette même lettre dans la main
+                    print("You have not got this letter in your hand")
                     return False
         else :
             return False
@@ -305,7 +309,7 @@ def play_hand(hand, word_list):
         # If the input is two exclamation points:
         if word == "!!":
             # End the game (break out of the loop)
-            print("Tu as arrete la partie")
+            print("You pass to another hand")
             break
         # Otherwise (the input is not two exclamation points):
         else:
@@ -321,13 +325,13 @@ def play_hand(hand, word_list):
             # Otherwise (the word is not valid):
                 # Reject invalid word (print a message)
             else: #word = invalid word
-                print("Input another word.")
+                print("Incorrect word, input another word")
             # update the user's hand by removing the letters of their inputted word
             hand = update_hand(hand, word)
 
     # Game is over (user entered '!!' or ran out of letters),
     # so tell user the total score
-    print("game over, Total : ", total)
+    print("You haven't got any letter on your hand, Total score of this hand is : ", total)
     # Return the total score as result of function
     return total
 
@@ -384,7 +388,7 @@ def play_game(word_list):
     Allow the user to play a series of hands
 
     * Asks the user to input a total number of hands
-    
+
     * Accumulates the score for each hand into a total score for the
       entire series
 
@@ -412,27 +416,29 @@ def play_game(word_list):
 
     x = input("Start a new party?")
     if x == "yes":
-        y = input("How many hand would you play?")
+        y = int(input("How many hand would you play?"))
         total_score = 0
         substitue_game = False
+        replay_hand = False
         for i in range(y):
+            print()
             hand = deal_hand(HAND_SIZE)
+            print("Your hand is ",hand)
             if not substitue_game:
-                want_substitue = input("Do you want substitute a letter ?")
+                want_substitue = input("Do you want to substitute a letter ?")
                 if want_substitue == "yes":
                     letter_substitue = input("Which letter do you want to substitute ?")
                     hand = substitute_hand(hand,letter_substitue)
                     substitue_game = True
             total = play_hand(hand, word_list)
-            print(total_score)
-            replay_hand = False
-                if not replay_hand:
-                    want_replay = input("Do you want to replay the hand?")
-                    if want_replay == "yes":
-                        total_bis = play_hand(hand, word_list)
-                        if total_bis > total :
-                            total = total_bis
+            if not replay_hand:
+                want_replay = input("Do you want to replay the hand?")
+                if want_replay == "yes":
+                    total_bis = play_hand(hand, word_list)
+                    if total_bis > total :
+                        total = total_bis
             total_score += total
+            print("Current total score:",total_score)
         print("Game over, your total score is : ", total_score)
         return total_score
 
@@ -449,7 +455,4 @@ def play_game(word_list):
 if __name__ == '__main__':
 
     word_list = load_words()
-    #play_game(word_list)
-    hand = {'a' : 2,'y' : 1, 'b' : 1, 'p': 2, 'd' : 1}
-    #play_hand(hand,word_list)
-    print(substitute_hand(hand, 'b'))
+    play_game(word_list)

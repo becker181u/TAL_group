@@ -367,6 +367,7 @@ def substitute_hand(hand, letter):
     new_hand = hand.copy()
     x = False
     if letter not in hand:
+        print("The letter is not in the hand")
         return hand #si la lettre donnée par le joueur n'est pas dans la main, la main ne change pas
     while x == False:
         new_letter = random.choice(VOWELS + CONSONANTS)
@@ -409,7 +410,34 @@ def play_game(word_list):
     word_list: list of lowercase strings
     """
 
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
+    x = input("Start a new party?")
+    if x == "yes":
+        y = input("How many hand would you play?")
+        total_score = 0
+        substitue_game = False
+        for i in range(y):
+            hand = deal_hand(HAND_SIZE)
+            if not substitue_game:
+                want_substitue = input("Do you want substitute a letter ?")
+                if want_substitue == "yes":
+                    letter_substitue = input("Which letter do you want to substitute ?")
+                    hand = substitute_hand(hand,letter_substitue)
+                    substitue_game = True
+            total = play_hand(hand, word_list)
+            print(total_score)
+            replay_hand = False
+                if not replay_hand:
+                    want_replay = input("Do you want to replay the hand?")
+                    if want_replay == "yes":
+                        total_bis = play_hand(hand, word_list)
+                        if total_bis > total :
+                            total = total_bis
+            total_score += total
+        print("Game over, your total score is : ", total_score)
+        return total_score
+
+
+
 
 
 

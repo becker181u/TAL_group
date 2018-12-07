@@ -416,30 +416,30 @@ def play_game(word_list):
 
     x = input("Start a new party?")
     if x == "yes":
-        y = int(input("How many hand would you play?"))
+        y = int(input("How many hand would you play?")) #demande au joueur combien de mains il veut jouer.
         total_score = 0
         substitue_game = False
         replay_hand = False
-        for i in range(y):
+        for i in range(y): #le jeu continue tant que le nombre de mains n'est pas atteint
             print()
             hand = deal_hand(HAND_SIZE)
             print("Your hand is ",hand)
-            if not substitue_game:
-                want_substitue = input("Do you want to substitute a letter ?")
-                if want_substitue == "yes":
-                    letter_substitue = input("Which letter do you want to substitute ?")
-                    hand = substitute_hand(hand,letter_substitue)
-                    substitue_game = True
-            total = play_hand(hand, word_list)
-            if not replay_hand:
-                want_replay = input("Do you want to replay the hand?")
-                if want_replay == "yes":
-                    total_bis = play_hand(hand, word_list)
-                    if total_bis > total :
+            if not substitue_game: #tant que le joueur ne veut pas substituer une lettre
+                want_substitue = input("Do you want to substitute a letter ?")  #...retourne la question
+                if want_substitue == "yes":  #si le joueur veut substituer une lettre:
+                    letter_substitue = input("Which letter do you want to substitute ?") #Demande au joueur quelle lettre il veut substituer
+                    hand = substitute_hand(hand,letter_substitue) #indique la lettre à substituer
+                    substitue_game = True #cette question ne peut être posée qu'une seule fois par jeu
+            total = play_hand(hand, word_list) #enregistre le total de chaque main
+            if not replay_hand: #tant que le joueur ne veut pas rejouer la même main
+                want_replay = input("Do you want to replay the hand?") #...retourne la question
+                if want_replay == "yes": #si le joueur veut rejouer la main
+                    total_bis = play_hand(hand, word_list) #affiche le score
+                    if total_bis > total : #sélectionne le meilleur score
                         total = total_bis
-            total_score += total
-            print("Current total score:",total_score)
-        print("Game over, your total score is : ", total_score)
+            total_score += total #additionne les différents totaux pour obtenir le score total
+            print("Current total score:",total_score) #affiche le score après chaque main
+        print("Game over, your total score is : ", total_score) #affiche le score en fin de partie
         return total_score
 
 

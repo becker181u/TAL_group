@@ -383,7 +383,7 @@ def play_game(word_list):
     Allow the user to play a series of hands
 
     * Asks the user to input a total number of hands
-
+    
     * Accumulates the score for each hand into a total score for the
       entire series
 

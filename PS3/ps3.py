@@ -394,7 +394,7 @@ def play_game(word_list):
       substitute letters in the future.
 
     * For each hand, ask the user if they would like to replay the hand.
-      If the user inputs 'yes', they will replay the hand and keep
+      If the user inputs 'yes', he will replay the hand and keep
       the better of the two scores for that hand.  This can only be done once
       during the game. Once the replay option is used, the user should not
       be asked if they want to replay future hands. Replaying the hand does

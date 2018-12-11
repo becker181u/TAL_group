@@ -415,7 +415,7 @@ def play_game(word_list):
     """
 
     x = input("Start a new party?")
-    if x == "yes":
+    if x == "yes" or x == "y":
         y = int(input("How many hand would you play?"))
         total_score = 0
         substitue_game = False
